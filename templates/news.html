@@ -1,0 +1,41 @@
+
+<!--  наследуемся от шаблона default.html, который мы создавали ещё во времена flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% load censor %}
+
+<!-- Название у нас будет proudcts -->
+{% block title %}
+Post
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, ID которого было передано в адрес -->
+{% block content %}
+<h6> <div align="left">Всего новостей: {{ news|length }} </div> </h6>
+ <table>
+            <tr>
+                <td>
+                    Заголовок
+                </td>
+                <td>
+                    Дата публикации
+                </td>
+                <td>
+                    Статья, Новость
+                </td>
+            </tr>
+        {% for pos in news %} <!-- Для каждого товара будете генерироваться новая строчка, т. е. новый html-код. При этом сам цикл работает точно также, как и в Python. product — переменная цикла, т. е. наш товар, взятый из общего списка -->
+            <tr>
+                <td>
+                    <div align="left"> {{ pos.title|censor_mat }} </div><!-- не забываем, что переменные в шаблоне ничем не отличаются от переменных в Python. Здесь также можно получать доступ к полям класса. Например, здесь мы выводим имя, в следующем столбце описание, и т. д.  -->
+                </td>
+                <td>
+                    {{ pos.dateCreation|date:'d M Y' }}
+                </td>
+                <td>
+                    <div align="left"> {{ pos.text|truncatechars:50|censor_mat }} </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+{% endblock content %}

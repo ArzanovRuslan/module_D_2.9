@@ -1,0 +1,16 @@
+<!--  наследуемся от шаблона default.html, который мы создавали ещё во времена flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% load censor %}
+
+<!-- Название у нас будет proudcts -->
+{% block title %}
+Post
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, ID которого было передано в адрес -->
+{% block content %}
+<h2> {{ news.title|censor_mat  }} </h2>
+<h6> {{ news.dateCreation|date:'d M Y h:m' }} </h6>
+<div align="left"> <h5> {{ news.text|censor_mat  }} </h5> </div>
+{% endblock content %}
